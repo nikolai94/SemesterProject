@@ -25,15 +25,17 @@ public class Kunde implements Serializable {
     private String lastName;
     private String city;
     private String country;
+    private String street;
 
     public Kunde() {
     }
 
-    public Kunde(String firstName, String lastName, String city, String country) {
+    public Kunde(String firstName, String lastName, String city, String country,String street) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.city = city;
         this.country = country;
+        this.street = street;
     }
     
     
