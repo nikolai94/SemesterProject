@@ -24,13 +24,23 @@ public class Seat implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
+    
     @OneToOne
     private Kunde kunde;
     @ManyToOne
     private Reservation reservation;
-  
+    
+    public void addReservation(Reservation r)
+    {
+     reservation = r;   
+    }
 
     public Seat() {
+    }
+    
+    public void addKunde(Kunde k)
+    {
+        kunde = k;
     }
     
     

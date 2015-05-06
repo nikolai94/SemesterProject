@@ -6,11 +6,14 @@
 package entity;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 /**
@@ -37,15 +40,22 @@ public class Fligth implements Serializable {
     private Airport toAirport;
     @ManyToOne
     private Fly fly;
-    @ManyToOne
-    private Reservation reservation;
+  
+    
+   
+    @OneToMany(mappedBy = "fligth")
+    private List<Reservation> reservations = new ArrayList<Reservation>();
+
+    
     
  
 
     public Fligth() {
     }
 
-    
+    public void addReservation(Reservation reservation ){
+        reservations.add(reservation);
+    }
     
     
 }

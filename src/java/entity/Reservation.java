@@ -29,15 +29,22 @@ public class Reservation implements Serializable {
     
     @OneToMany(mappedBy = "reservation")
     private List<Seat> seats = new ArrayList();
+    @ManyToOne
+    private Fligth fligth;
+    
+    public void addToSeats(Seat seat){
+        seats.add(seat);
+    } 
     
     
-    @OneToMany(mappedBy = "reservation")
-    private List<Fligth> Fligths = new ArrayList();
+  
     
     public Reservation()
     {
         
     }
-    
+    public void addFligth(Fligth f){
+        this.fligth = f;
+    } 
     
 }

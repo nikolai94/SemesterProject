@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 /**
  *
@@ -26,6 +27,8 @@ public class Kunde implements Serializable {
     private String city;
     private String country;
     private String street;
+    @OneToOne(mappedBy = "kunde")
+    private Seat seat;
 
     public Kunde() {
     }
@@ -36,6 +39,14 @@ public class Kunde implements Serializable {
         this.city = city;
         this.country = country;
         this.street = street;
+    }
+
+    public Seat getSeat() {
+        return seat;
+    }
+
+    public void setSeat(Seat seat) {
+        this.seat = seat;
     }
     
     
