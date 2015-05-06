@@ -14,12 +14,13 @@ import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 
+
 /**
  * REST Web Service
  *
  * @author Jonathan
  */
-@Path("generic")
+@Path("api")
 public class GenericResource {
 
     @Context
