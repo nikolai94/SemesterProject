@@ -25,7 +25,7 @@ public class Seat implements Serializable {
     private Integer id;
     
     @OneToOne
-   private Kunde kunde;
+    private Kunde kunde;
     @ManyToOne
     private Reservation reservation;
   

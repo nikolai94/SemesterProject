@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,12 +28,11 @@ public class Reservation implements Serializable {
     
     
     @OneToMany(mappedBy = "reservation")
-    private ArrayList<Seat> seats = new ArrayList<Seat>();
-    
+    private List<Seat> seats = new ArrayList();
     
     
     @OneToMany(mappedBy = "reservation")
-   private ArrayList<Fligth> Flight = new ArrayList<Fligth>();
+    private List<Fligth> Fligths = new ArrayList();
     
     public Reservation()
     {

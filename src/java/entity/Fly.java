@@ -7,6 +7,7 @@ package entity;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -31,7 +32,7 @@ public class Fly implements Serializable {
     
     
     @OneToMany(mappedBy = "fly")
-    private ArrayList<Fligth> Fligths = new ArrayList<Fligth>();
+    private List<Fligth> Fligths = new ArrayList();
 
     public Fly(int seats) {
         this.seats = seats;

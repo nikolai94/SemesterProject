@@ -1,6 +1,6 @@
 
 import entity.*;
-import facade.Facade;
+import facade.*;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
