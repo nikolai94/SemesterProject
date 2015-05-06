@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -24,7 +25,22 @@ public class Fly implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
+    //ArrayList<Integer> seats = new ArrayList<>();
+   private int seats;
+    
+    
+    
     @OneToMany(mappedBy = "fly")
-    private ArrayList<Fligth> Fligths = new ArrayList<>();
+    private ArrayList<Fligth> Fligths = new ArrayList<Fligth>();
+
+    public Fly(int seats) {
+        this.seats = seats;
+    }
+    public Fly()
+    {
+        
+    }
+    
+    
     
 }

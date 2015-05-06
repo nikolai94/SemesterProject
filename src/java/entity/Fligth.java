@@ -23,23 +23,29 @@ public class Fligth implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String dato;
+    private String takeOffDate;
+    private String landingDate;
+    private int price;
+    private boolean bookingCode;
+    private int freeSeats;
+
+    
+    @OneToOne
+    private Airport fromAirport;
+    
+    @OneToOne
+    private Airport toAirport;
     @ManyToOne
     private Fly fly;
+    @ManyToOne
+    private Reservation reservation;
     
-    @OneToOne
-    private Airport fromAirport = new Airport();
-    
-    @OneToOne
-    private Airport toAirport = new Airport();
-    
+ 
 
     public Fligth() {
     }
 
-    public Fligth(String dato) {
-        this.dato = dato;
-    }
+    
     
     
 }

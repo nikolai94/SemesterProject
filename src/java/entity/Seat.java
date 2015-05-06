@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 /**
@@ -24,5 +25,13 @@ public class Seat implements Serializable {
     private Integer id;
     
     @OneToOne
-    Kunde kunde = new Kunde();
+   private Kunde kunde;
+    @ManyToOne
+    private Reservation reservation;
+  
+
+    public Seat() {
+    }
+    
+    
 }

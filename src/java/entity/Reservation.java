@@ -25,11 +25,14 @@ public class Reservation implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
-    @OneToMany
-    ArrayList<Seat> seats = new ArrayList<>();
     
-    @OneToMany
-    ArrayList<Fligth> Flight = new ArrayList<>();
+    @OneToMany(mappedBy = "reservation")
+    private ArrayList<Seat> seats = new ArrayList<Seat>();
+    
+    
+    
+    @OneToMany(mappedBy = "reservation")
+   private ArrayList<Fligth> Flight = new ArrayList<Fligth>();
     
     public Reservation()
     {
