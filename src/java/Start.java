@@ -1,8 +1,8 @@
 
 import entity.*;
-import facade.*;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import newFacade.MyFacade;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -17,7 +17,7 @@ import javax.persistence.Persistence;
 public class Start {
     public static void main(String[] args) {
 //Persistence.generateSchema("SemesterProjectFligthsPU", null);    
-    Facade facade = new Facade();
+    MyFacade facade = new MyFacade();
         
      //  Fly fly = new Fly(10);
        // facade.CreateFligth(fly);
