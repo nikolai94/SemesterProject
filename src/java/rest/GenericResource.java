@@ -1,13 +1,13 @@
 package rest;
+import DTOClasses.AvaiableFligths;
 import com.google.gson.Gson;
+import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import newFacade.MyFacade;
-
-
 /**
  * REST Web Service
  *
@@ -18,14 +18,12 @@ public class GenericResource {
 
     @Context
     private UriInfo context;
-       static Gson gson = new Gson();
+    static Gson gson = new Gson();
+    MyFacade facade = new MyFacade();
 
-    /**
-     * Creates a new instance of GenericResource
-     */
+
     public GenericResource() {
 
-       //MyFacade facade = new MyFacade();
     }
     public static void main(String args[]){
         
@@ -42,37 +40,41 @@ public class GenericResource {
         
         return name;
     }
+    
+    //startAirport Date DONE
     @GET
-    @Path("/flights/{startdate}/{enddate}")
+    @Path("/flights/{startAirport}/{date}")
     @Produces("application/json")
-    public String getFlightDates(@PathParam("startdate") int startdate,
-            @PathParam("enddate") int enddate){
-        return gson.toJson("startdate: " + startdate + " " + "enddate: " + enddate);
+    public String getFlightDates(@PathParam("startAirport") String startAirport,
+            @PathParam("date") String date){
+        return gson.toJson(facade.afbudsrejser(startAirport, date));
         
     }
-    
+    //DONE
     @GET
-    @Path("/flights/{startairport}/{endairport}/{dateid}")
+    @Path("/flights/{startAirport}/{slutAirport}/{dato}")
     @Produces("application/json")
-    public String getStartEndAirport(@PathParam("startairport")String airport,
-        @PathParam("endairport") String endair, @PathParam("dateid") int dateid){
-        return gson.toJson("startairport: " + airport + " " + "endairport: " + endair + " "
-                + "date: " + dateid);
+    public String getStartEndAirport(@PathParam("startAirport")String startAirport,
+        @PathParam("slutAirport") String slutAirport, @PathParam("dato") String dato){
+        
+        return gson.toJson(facade.getFlightsWithAirportsAndDate(startAirport, slutAirport, dato));
         
 }
-    
+    //DONE
     @GET
-    @Path("/flights/{reservationid}")
+    @Path("/flights/{id}")
     @Produces("application/json")
-    public String flightDates(@PathParam("reservationid")int id){
-        return gson.toJson("Reservationsid: " + id);
+    public String flightDates(@PathParam("id")int id){
+        
+        return gson.toJson(facade.findReservationOnId(id));
     }
     
     @POST
-    @Path("/flights/{flightid}")
-    @Produces("application/json")
-    public String createReservation(@PathParam("flightid")int fid){
-        return gson.toJson("flightid: " + fid);
+    @Path("/flights/{fid}")
+    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
+    public String createReservation(@PathParam("fid") int fid){
+        return gson.toJson("flightid is :" + fid);
     }
     
     @DELETE
@@ -80,7 +82,8 @@ public class GenericResource {
     //@Produces(MediaType.APPLICATION_JSON)
     @Path("/flights/delete/{reservationid}")
     public String deleteFlight(@PathParam("reservationid")int reservationid){
-        return gson.toJson("Slettet reservation: " + reservationid);
+        //return gson.toJson("Slettet reservation: " + reservationid);
+        return gson.toJson(facade.ReservationDelete(reservationid));
     }
     
 
