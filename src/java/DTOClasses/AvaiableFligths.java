@@ -115,10 +115,7 @@ public class AvaiableFligths {
         this.bookingCode = bookingCode;
     }
 
-    @Override
-    public String toString() {
-        return "AvaiableFligths{" + "airline=" + airline + ", price=" + price + ", flightId=" + flightId + ", takeOffDate=" + takeOffDate + ", landingDate=" + landingDate + ", depature=" + depature + ", destination=" + destination + ", seats=" + seats + ", avaiableSeats=" + avaiableSeats + ", bookingCode=" + bookingCode + '}';
-    }
+ 
     
     
     

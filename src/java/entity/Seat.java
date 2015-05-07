@@ -42,6 +42,14 @@ public class Seat implements Serializable {
     {
         kunde = k;
     }
+
+    public Kunde getKunde() {
+        return kunde;
+    }
+
+    public void setKunde(Kunde kunde) {
+        this.kunde = kunde;
+    }
     
     
 }

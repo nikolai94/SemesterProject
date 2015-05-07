@@ -62,6 +62,10 @@ public class Fligth implements Serializable {
     public int getFreeSeats() {
         return freeSeats;
     }
+
+    public void setFreeSeats(int freeSeats) {
+        this.freeSeats = freeSeats;
+    }
     
 
     public int getPrice() {

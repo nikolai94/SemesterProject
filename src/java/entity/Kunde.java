@@ -41,6 +41,9 @@ public class Kunde implements Serializable {
         this.street = street;
     }
 
+    
+    
+
     public Seat getSeat() {
         return seat;
     }

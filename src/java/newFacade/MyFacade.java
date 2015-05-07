@@ -5,6 +5,7 @@
  */
 package newFacade;
 import DTOClasses.AvaiableFligths;
+import DTOClasses.ReservationDTO;
 import entity.Fligth;
 import entity.Fly;		
 import entity.Kunde;
@@ -27,24 +28,28 @@ public class MyFacade {
      emf = Persistence.createEntityManagerFactory("SemesterProjectFligthsPU");		
     }
      
-     public boolean booking(int flyId, ArrayList<Kunde> kundeArr)		
+     public List<Kunde> booking(int flyId, ArrayList<Kunde> kundeArr)		
      {	
+        List<Kunde> Kundeliste = new ArrayList<>();
         em = emf.createEntityManager();
         em.getTransaction().begin();		
         Reservation reservation = new Reservation();
         Fligth fligth = em.find(Fligth.class, flyId);
+         System.out.println(fligth.getFreeSeats());
         if(fligth.getFreeSeats() >= kundeArr.size())
         {
-            
+            System.out.println("inde");
         
         for (int i = 0; i < kundeArr.size(); i++) { 
-            
+            reservation.setTotalPrice(fligth.getPrice()+reservation.getTotalPrice());
             Seat seat = new Seat();
             seat.addKunde(kundeArr.get(i));
             reservation.addToSeats(seat);
             seat.addReservation(reservation);
             em.persist(kundeArr.get(i));
             em.persist(seat);
+            fligth.setFreeSeats(fligth.getFreeSeats()-1);
+           Kundeliste.add(kundeArr.get(i));
           //  em.persist());
         }
         fligth.addReservation(reservation);
@@ -55,12 +60,12 @@ public class MyFacade {
         
         em.getTransaction().commit();		
         em.close();
-        return true;
+        return Kundeliste;
         }
         else
         {
             em.close();
-            return false;
+            return null;
             
         }
         
@@ -79,4 +84,34 @@ public class MyFacade {
           }
          return DTOFLigths;
      }
+     
+     
+       public List<AvaiableFligths> afbudsrejser(String startAirport,String dato)
+     {
+         em = emf.createEntityManager();
+         List<AvaiableFligths> DTOFLigths = new ArrayList<>();
+          String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.name=:startLuftnavn";
+          List<Fligth> list = em.createQuery(q).setParameter("takeOffDate", dato).setParameter("startLuftnavn", startAirport).getResultList();
+          for (int i = 0; i < list.size(); i++) {
+            //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
+              AvaiableFligths dtoFlight = new AvaiableFligths(list.get(i).getFly().getAirline().getFirmName(),list.get(i).getPrice(),list.get(i).getId()+"",list.get(i).getTakeOffDate(),list.get(i).getLandingDate(),list.get(i).getFromAirport().getCode(),list.get(i).getToAirport().getCode(),list.get(i).getFly().getSeats(), list.get(i).getFreeSeats(), list.get(i).isBookingCode());
+             DTOFLigths.add(dtoFlight);
+          }
+         return DTOFLigths;
+     }
+       
+       public ReservationDTO findReservationOnId(int id)
+       {
+             em = emf.createEntityManager();
+             
+              Reservation reservation = em.find(Reservation.class, id);
+              Fligth flight = reservation.getFligth();
+              List<Seat> seat = reservation.getSeats();
+              List<Kunde> kunder = new ArrayList<>();
+              for (int i = 0; i < seat.size(); i++) {
+                kunder.add(seat.get(i).getKunde());
+           }
+               ReservationDTO dto = new ReservationDTO(reservation.getId(),flight.getId()+"",kunder, reservation.getTotalPrice());
+              return dto;
+       }
 }
