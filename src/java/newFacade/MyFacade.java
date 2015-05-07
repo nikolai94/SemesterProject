@@ -105,13 +105,46 @@ public class MyFacade {
              em = emf.createEntityManager();
              
               Reservation reservation = em.find(Reservation.class, id);
+              System.out.println(reservation);
               Fligth flight = reservation.getFligth();
               List<Seat> seat = reservation.getSeats();
-              List<Kunde> kunder = new ArrayList<>();
+           
+             
+              ReservationDTO  dto = new ReservationDTO(reservation.getId(),flight.getId()+"", reservation.getTotalPrice());
+             
               for (int i = 0; i < seat.size(); i++) {
-                kunder.add(seat.get(i).getKunde());
-           }
-               ReservationDTO dto = new ReservationDTO(reservation.getId(),flight.getId()+"",kunder, reservation.getTotalPrice());
+                //kunder.add(seat.get(i).getKunde());
+                dto.AddPassengers(seat.get(i).getKunde().getFirstName(),seat.get(i).getKunde().getLastName(),seat.get(i).getKunde().getCity(),seat.get(i).getKunde().getCountry(),seat.get(i).getKunde().getStreet());
+              }
               return dto;
+       }
+       
+       public ReservationDTO ReservationDelete(int id)
+       {
+             em = emf.createEntityManager();
+             
+              Reservation reservation = em.find(Reservation.class, id);
+              Fligth flight = reservation.getFligth();
+              List<Seat> seat = reservation.getSeats();
+            
+             System.out.println(reservation);
+              ReservationDTO  dto = new ReservationDTO(reservation.getId(),flight.getId()+"", reservation.getTotalPrice());
+             
+              for (int i = 0; i < seat.size(); i++) {
+                //kunder.add(seat.get(i).getKunde());
+                dto.AddPassengers(seat.get(i).getKunde().getFirstName(),seat.get(i).getKunde().getLastName(),seat.get(i).getKunde().getCity(),seat.get(i).getKunde().getCountry(),seat.get(i).getKunde().getStreet());
+              }
+              
+              flight.setFreeSeats(flight.getFreeSeats()+seat.size());
+              em.getTransaction().begin();
+              for (int i = 0; i < seat.size(); i++) {
+               em.remove(seat.get(i));
+                }
+              em.remove(reservation);
+              em.persist(flight);
+              em.getTransaction().commit();
+              em.close();
+           
+           return dto;
        }
 }

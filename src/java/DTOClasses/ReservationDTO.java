@@ -16,13 +16,14 @@ import java.util.List;
 public class ReservationDTO {
     int reservationID;
     String flightID;
-    List<Kunde> Passengers = new ArrayList<>();
+    List<Kunder> Passengers = new ArrayList<>();
     int totalPrice;
 
-    public ReservationDTO(int reservationID, String flightID,List<Kunde> Passengers, int totalPrice) {
+    public ReservationDTO(int reservationID, String flightID, int totalPrice) {
         this.reservationID = reservationID;
         this.flightID = flightID;
-        this.Passengers = Passengers;
+       
+        
         this.totalPrice = totalPrice;
     }
 
@@ -42,18 +43,15 @@ public class ReservationDTO {
         this.flightID = flightID;
     }
 
-    public List<Kunde> getPassengers() {
+    public List<Kunder> getPassengers() {
         return Passengers;
     }
-    public void AddPassengers(Kunde k)
+    public void AddPassengers( String firstName,String lastName, String city, String country, String street)
     {
-        Passengers.add(k);
+        Passengers.add(new Kunder(firstName, lastName, city, country, street));
     }
 
-    public void setPassengers(List<Kunde> Passengers) {
-        this.Passengers = Passengers;
-    }
-
+  
     public int getTotalPrice() {
         return totalPrice;
     }
@@ -67,7 +65,23 @@ public class ReservationDTO {
         return "ReservationDTO{" + "reservationID=" + reservationID + ", flightID=" + flightID + ", Passengers=" + Passengers + ", totalPrice=" + totalPrice + '}';
     }
     
-    
+    public static class Kunder{
+        private String firstName;
+        private String lastName;
+        private String city;
+        private String country;
+        private String street;
+
+        public Kunder(String firstName, String lastName, String city, String country, String street) {
+            this.firstName = firstName;
+            this.lastName = lastName;
+            this.city = city;
+            this.country = country;
+            this.street = street;
+        }
+        
+        
+    }
     
     
 }

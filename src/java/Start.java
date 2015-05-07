@@ -25,15 +25,18 @@ public class Start {
         kunde.add(k2);
 
       Gson g = new Gson();
-        //System.out.println(facade.booking(2, kunde));
+      //  System.out.println(facade.booking(2, kunde));
     
-        System.out.println(g.toJson(facade.getFlightsWithAirportsAndDate("Roskilde lufthavn", "Randers flyplads", "13-02-15")));
+       // System.out.println(g.toJson(facade.getFlightsWithAirportsAndDate("Roskilde lufthavn", "Randers flyplads", "13-02-15")));
        
         
      //   System.out.println("hej" + facade.afbudsrejser("Roskilde lufthavn", "13-02-15"));
      //  Fly fly = new Fly(10);
        // facade.CreateFligth(fly);
       
-        //System.out.println(facade.findReservationOnId(357));
+    //    System.out.println(g.toJson(facade.findReservationOnId(357)));
+        
+        
+        System.out.println(g.toJson(facade.ReservationDelete(759)));
     }
 }

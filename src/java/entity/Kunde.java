@@ -51,6 +51,34 @@ public class Kunde implements Serializable {
     public void setSeat(Seat seat) {
         this.seat = seat;
     }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getStreet() {
+        return street;
+    }
     
     
 }
