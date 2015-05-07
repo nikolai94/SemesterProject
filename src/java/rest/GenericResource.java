@@ -1,18 +1,11 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package rest;
-
+import com.google.gson.Gson;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.Produces;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
+import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import newFacade.MyFacade;
 
 
 /**
@@ -20,28 +13,76 @@ import javax.ws.rs.PUT;
  *
  * @author Jonathan
  */
-@Path("api")
+@Path("")
 public class GenericResource {
 
     @Context
     private UriInfo context;
+       static Gson gson = new Gson();
 
     /**
      * Creates a new instance of GenericResource
      */
     public GenericResource() {
+
+       //MyFacade facade = new MyFacade();
+    }
+    public static void main(String args[]){
+        
     }
 
-    /**
-     * Retrieves representation of an instance of rest.GenericResource
-     * @return an instance of java.lang.String
-     */
     @GET
-    @Produces("application/xml")
-    public String getXml() {
+    @Path("/flights")
+    @Produces("application/json")
+    public String getFlight() {
         //TODO return proper representation object
-        throw new UnsupportedOperationException();
+        String name = "flight number three";
+        
+        System.out.println(name);
+        
+        return name;
     }
+    @GET
+    @Path("/flights/{startdate}/{enddate}")
+    @Produces("application/json")
+    public String getFlightDates(@PathParam("startdate") int startdate,
+            @PathParam("enddate") int enddate){
+        return gson.toJson("startdate: " + startdate + " " + "enddate: " + enddate);
+        
+    }
+    
+    @GET
+    @Path("/flights/{startairport}/{endairport}/{dateid}")
+    @Produces("application/json")
+    public String getStartEndAirport(@PathParam("startairport")String airport,
+        @PathParam("endairport") String endair, @PathParam("dateid") int dateid){
+        return gson.toJson("startairport: " + airport + " " + "endairport: " + endair + " "
+                + "date: " + dateid);
+        
+}
+    
+    @GET
+    @Path("/flights/{reservationid}")
+    @Produces("application/json")
+    public String flightDates(@PathParam("reservationid")int id){
+        return gson.toJson("Reservationsid: " + id);
+    }
+    
+    @POST
+    @Path("/flights/{flightid}")
+    @Produces("application/json")
+    public String createReservation(@PathParam("flightid")int fid){
+        return gson.toJson("flightid: " + fid);
+    }
+    
+    @DELETE
+    //@Consumes(MediaType.APPLICATION_JSON)
+    //@Produces(MediaType.APPLICATION_JSON)
+    @Path("/flights/delete/{reservationid}")
+    public String deleteFlight(@PathParam("reservationid")int reservationid){
+        return gson.toJson("Slettet reservation: " + reservationid);
+    }
+    
 
     /**
      * PUT method for updating or creating an instance of GenericResource
@@ -49,7 +90,7 @@ public class GenericResource {
      * @return an HTTP response with content of the updated or created resource.
      */
     @PUT
-    @Consumes("application/xml")
-    public void putXml(String content) {
+    @Consumes("application/json")
+    public void putJson(String content) {
     }
 }
