@@ -33,6 +33,23 @@ public class Airport implements Serializable {
         this.city = city;
         this.code = code;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCode() {
+        return code;
+    }
+    
     
     
     

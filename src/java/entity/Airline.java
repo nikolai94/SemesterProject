@@ -12,49 +12,34 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
  *
- * @author Jonathan
+ * @author nikolai
  */
 @Entity
-public class Fly implements Serializable {
+public class Airline implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+    private String firmName;
     
-    //ArrayList<Integer> seats = new ArrayList<>();
-   private int seats;
-   
-    @ManyToOne
-    private Airline airline;
- 
+    @OneToMany(mappedBy = "airline")
+    private List<Fly> flyvere =  new ArrayList<>();
     
-    public int getSeats(){
-        return this.seats;
-    } 
-    
-    @OneToMany(mappedBy = "fly")
-    private List<Fligth> Fligths = new ArrayList();
-    
+public Airline(){}
 
-    public Fly(int seats) {
-        this.seats = seats;
-    }
-    public Fly()
-    {
-        
+    public Airline(String firmName) {
+        this.firmName = firmName;
     }
 
-    public Airline getAirline() {
-        return airline;
+    public String getFirmName() {
+        return firmName;
     }
-    
-    
     
     
 }
+
+

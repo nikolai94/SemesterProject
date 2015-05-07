@@ -4,12 +4,14 @@
  * and open the template in the editor.
  */
 package newFacade;
+import DTOClasses.AvaiableFligths;
 import entity.Fligth;
 import entity.Fly;		
 import entity.Kunde;
 import entity.Reservation;
 import entity.Seat;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;		
 import javax.persistence.EntityManagerFactory;		
 import javax.persistence.Persistence;
@@ -31,6 +33,9 @@ public class MyFacade {
         em.getTransaction().begin();		
         Reservation reservation = new Reservation();
         Fligth fligth = em.find(Fligth.class, flyId);
+        if(fligth.getFreeSeats() >= kundeArr.size())
+        {
+            
         
         for (int i = 0; i < kundeArr.size(); i++) { 
             
@@ -50,6 +55,28 @@ public class MyFacade {
         
         em.getTransaction().commit();		
         em.close();
-        return false;
+        return true;
+        }
+        else
+        {
+            em.close();
+            return false;
+            
+        }
+        
+     }
+     
+     public List<AvaiableFligths> getFlightsWithAirportsAndDate(String startAirport, String slutAirport, String dato)
+     {
+         em = emf.createEntityManager();
+         List<AvaiableFligths> DTOFLigths = new ArrayList<>();
+          String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.name=:startLuftnavn and f.toAirport.name=:slutAirport";
+          List<Fligth> list = em.createQuery(q).setParameter("takeOffDate", dato).setParameter("startLuftnavn", startAirport).setParameter("slutAirport", slutAirport).getResultList();
+          for (int i = 0; i < list.size(); i++) {
+            //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
+              AvaiableFligths dtoFlight = new AvaiableFligths(list.get(i).getFly().getAirline().getFirmName(),list.get(i).getPrice(),list.get(i).getId()+"",list.get(i).getTakeOffDate(),list.get(i).getLandingDate(),list.get(i).getFromAirport().getCode(),list.get(i).getToAirport().getCode(),list.get(i).getFly().getSeats(), list.get(i).getFreeSeats(), list.get(i).isBookingCode());
+             DTOFLigths.add(dtoFlight);
+          }
+         return DTOFLigths;
      }
 }

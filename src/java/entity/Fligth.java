@@ -46,6 +46,36 @@ public class Fligth implements Serializable {
     @OneToMany(mappedBy = "fligth")
     private List<Reservation> reservations = new ArrayList<Reservation>();
 
+    public Fly getFly() {
+        return fly;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+    
+    
+    public boolean isBookingCode() {
+        return bookingCode;
+    }
+
+    public int getFreeSeats() {
+        return freeSeats;
+    }
+    
+
+    public int getPrice() {
+        return price;
+    }
+
+    public String getTakeOffDate() {
+        return takeOffDate;
+    }
+
+    public String getLandingDate() {
+        return landingDate;
+    }
+
     
     
  
@@ -56,6 +86,23 @@ public class Fligth implements Serializable {
     public void addReservation(Reservation reservation ){
         reservations.add(reservation);
     }
+
+    public Airport getFromAirport() {
+        return fromAirport;
+    }
+
+    public Airport getToAirport() {
+        return toAirport;
+    }
+    
+    
+
+    @Override
+    public String toString() {
+        return 
+                "airline :"+fly.getAirline().getFirmName()+"Fligth{" + "id=" + id + ", takeOffDate=" + takeOffDate + ", landingDate=" + landingDate + ", price=" + price + ", bookingCode=" + bookingCode + ", freeSeats=" + freeSeats + ", fromAirport=" + fromAirport.getName() + ", toAirport=" + toAirport.getName() + ", fly=" + fly.getSeats() ;
+    }
+    
     
     
 }
