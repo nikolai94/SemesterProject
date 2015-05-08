@@ -75,7 +75,7 @@ public class MyFacade {
      {
          em = emf.createEntityManager();
          List<AvaiableFligths> DTOFLigths = new ArrayList<>();
-          String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.name=:startLuftnavn and f.toAirport.name=:slutAirport";
+          String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.airportName=:startLuftnavn and f.toAirport.airportName=:slutAirport";
           List<Fligth> list = em.createQuery(q).setParameter("takeOffDate", dato).setParameter("startLuftnavn", startAirport).setParameter("slutAirport", slutAirport).getResultList();
           for (int i = 0; i < list.size(); i++) {
             //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
@@ -90,7 +90,7 @@ public class MyFacade {
      {
          em = emf.createEntityManager();
          List<AvaiableFligths> DTOFLigths = new ArrayList<>();
-          String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.name=:startLuftnavn";
+          String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.airportName=:startLuftnavn";
           List<Fligth> list = em.createQuery(q).setParameter("takeOffDate", dato).setParameter("startLuftnavn", startAirport).getResultList();
           for (int i = 0; i < list.size(); i++) {
             //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
