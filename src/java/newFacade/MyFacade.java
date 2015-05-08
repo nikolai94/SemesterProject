@@ -28,7 +28,7 @@ public class MyFacade {
      emf = Persistence.createEntityManagerFactory("SemesterProjectFligthsPU");		
     }
      
-     public List<Kunde> booking(int flyId, ArrayList<Kunde> kundeArr)		
+     public List<Kunde> booking(int flyId, List<Kunde> kundeArr)		
      {	
         List<Kunde> Kundeliste = new ArrayList<>();
         em = emf.createEntityManager();

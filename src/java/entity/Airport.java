@@ -21,7 +21,7 @@ public class Airport implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
-    private String name;
+    private String airportName;
     private String city;
     private String code;
 
@@ -29,7 +29,7 @@ public class Airport implements Serializable {
     }
 
     public Airport(String name, String city, String code) {
-        this.name = name;
+        this.airportName = name;
         this.city = city;
         this.code = code;
     }
@@ -39,7 +39,7 @@ public class Airport implements Serializable {
     }
 
     public String getName() {
-        return name;
+        return airportName;
     }
 
     public String getCity() {

@@ -1,6 +1,9 @@
 package rest;
 import DTOClasses.AvaiableFligths;
+import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
+import entity.Kunde;
+import java.util.Arrays;
 import java.util.List;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
@@ -70,11 +73,20 @@ public class GenericResource {
     }
     
     @POST
-    @Path("/flights/{fid}")
-    @Produces({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-    @Consumes({MediaType.TEXT_PLAIN, MediaType.APPLICATION_JSON})
-    public String createReservation(@PathParam("fid") int fid){
-        return gson.toJson("flightid is :" + fid);
+    @Path("/flights/{id}")
+    @Produces("application/json")
+    public String createReservation(@PathParam("id") int id,String str){
+        
+        int findStart = str.indexOf("[");
+        int findSlut = str.indexOf("]")+1;
+        String newStr = str.substring(findStart,findSlut);
+        
+        Kunde[] kundeArray = gson.fromJson(newStr, Kunde[].class);
+        List<Kunde> kundeList = Arrays.asList(kundeArray);
+        
+        facade.booking(id, kundeList);
+        
+        return""+ kundeList;
     }
     
     @DELETE
