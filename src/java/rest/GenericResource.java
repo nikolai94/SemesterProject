@@ -3,14 +3,21 @@ import DTOClasses.AvaiableFligths;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import entity.Kunde;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import newFacade.MyFacade;
+import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 /**
  * REST Web Service
  *
@@ -49,8 +56,20 @@ public class GenericResource {
     @Path("/flights/{startAirport}/{date}")
     @Produces("application/json")
     public String getFlightDates(@PathParam("startAirport") String startAirport,
-            @PathParam("date") String date){
-        return gson.toJson(facade.afbudsrejser(startAirport, date));
+            @PathParam("date") long date){
+        String dato = "";
+        String datoSlut = "";
+        try {
+         Date hej = new Date(date);
+        Date guf = new Date(date+TimeZone.getDefault().getOffset(hej.getTime()));
+       
+         dato = guf.toLocaleString();
+         datoSlut = dato.substring(0, 10);
+        } catch (Exception e) {
+           // return e.toString();
+        }
+        
+        return gson.toJson(facade.afbudsrejser(startAirport, datoSlut));
         
     }
     //DONE
@@ -58,9 +77,21 @@ public class GenericResource {
     @Path("/flights/{startAirport}/{slutAirport}/{dato}")
     @Produces("application/json")
     public String getStartEndAirport(@PathParam("startAirport")String startAirport,
-        @PathParam("slutAirport") String slutAirport, @PathParam("dato") String dato){
-        
-        return gson.toJson(facade.getFlightsWithAirportsAndDate(startAirport, slutAirport, dato));
+        @PathParam("slutAirport") String slutAirport, @PathParam("dato") Long datoUrl){
+         String dato = "";
+        String datoSlut = "";
+        try {
+         Date hej = new Date(datoUrl);
+        Date guf = new Date(datoUrl+TimeZone.getDefault().getOffset(hej.getTime()));
+       
+         dato = guf.toLocaleString();
+         datoSlut = dato.substring(0, 10);
+        } catch (Exception e) {
+            return e.toString();
+        }
+       
+          
+        return gson.toJson(facade.getFlightsWithAirportsAndDate(startAirport, slutAirport, datoSlut));
         
 }
     //DONE

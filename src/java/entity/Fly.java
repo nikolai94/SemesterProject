@@ -53,6 +53,12 @@ public class Fly implements Serializable {
     public Airline getAirline() {
         return airline;
     }
+
+    public void setAirline(Airline airline) {
+        this.airline = airline;
+    }
+    
+    
     
     
     

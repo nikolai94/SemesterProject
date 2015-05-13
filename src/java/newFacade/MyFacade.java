@@ -5,16 +5,21 @@
  */
 package newFacade;
 import DTOClasses.AvaiableFligths;
-import DTOClasses.ErrorCode;
 import DTOClasses.ReservationDTO;
 import entity.Fligth;
 import entity.Fly;		
 import entity.Kunde;
 import entity.Reservation;
 import entity.Seat;
-import exception.ExceptionError;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;		
 import javax.persistence.EntityManagerFactory;		
 import javax.persistence.Persistence;
@@ -25,7 +30,7 @@ import javax.persistence.Persistence;
 public class MyFacade {
      EntityManagerFactory emf;		
    EntityManager em; 
-   
+      DateFormat format = new SimpleDateFormat("dd-MM-yyyy", Locale.GERMANY);
      public MyFacade(){		
      emf = Persistence.createEntityManagerFactory("SemesterProjectFligthsPU");		
     }
@@ -85,13 +90,24 @@ public class MyFacade {
      public List<AvaiableFligths> getFlightsWithAirportsAndDate(String startAirport, String slutAirport, String dato) 
      {
          em = emf.createEntityManager();
+      
          List<AvaiableFligths> DTOFLigths = new ArrayList<>();
           String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.airportName=:startLuftnavn and f.toAirport.airportName=:slutAirport";
           List<Fligth> list = em.createQuery(q).setParameter("takeOffDate", dato).setParameter("startLuftnavn", startAirport).setParameter("slutAirport", slutAirport).getResultList();
           
-        
+        Date date = null;
+        Date date2  = null;
           for (int i = 0; i < list.size(); i++) {
-            //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
+             try {
+                 //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
+
+                 date = format.parse(list.get(i).getTakeOffDate());
+                 date2 = format.parse(list.get(i).getLandingDate());
+             } catch (ParseException ex) {
+                 System.out.println(ex);
+             }
+         list.get(i).setTakeOffDate(date.getTime()+"");
+         list.get(i).setLandingDate(date2.getTime()+"");
               AvaiableFligths dtoFlight = new AvaiableFligths(list.get(i).getFly().getAirline().getFirmName(),list.get(i).getPrice(),list.get(i).getId()+"",list.get(i).getTakeOffDate(),list.get(i).getLandingDate(),list.get(i).getFromAirport().getCode(),list.get(i).getToAirport().getCode(),list.get(i).getFly().getSeats(), list.get(i).getFreeSeats(), list.get(i).isBookingCode());
              DTOFLigths.add(dtoFlight);
           }
@@ -105,7 +121,21 @@ public class MyFacade {
          List<AvaiableFligths> DTOFLigths = new ArrayList<>();
           String q = "select f from Fligth f where f.takeOffDate=:takeOffDate and f.fromAirport.airportName=:startLuftnavn";
           List<Fligth> list = em.createQuery(q).setParameter("takeOffDate", dato).setParameter("startLuftnavn", startAirport).getResultList();
+            Date date = null;
+            Date date2  = null;
           for (int i = 0; i < list.size(); i++) {
+              
+               try {
+                 //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
+
+                 date = format.parse(list.get(i).getTakeOffDate());
+                 date2 = format.parse(list.get(i).getLandingDate());
+             } catch (ParseException ex) {
+                 System.out.println(ex);
+             }
+         list.get(i).setTakeOffDate(date.getTime()+"");
+         list.get(i).setLandingDate(date2.getTime()+"");
+              
             //  String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode
               AvaiableFligths dtoFlight = new AvaiableFligths(list.get(i).getFly().getAirline().getFirmName(),list.get(i).getPrice(),list.get(i).getId()+"",list.get(i).getTakeOffDate(),list.get(i).getLandingDate(),list.get(i).getFromAirport().getCode(),list.get(i).getToAirport().getCode(),list.get(i).getFly().getSeats(), list.get(i).getFreeSeats(), list.get(i).isBookingCode());
              DTOFLigths.add(dtoFlight);

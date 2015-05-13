@@ -53,6 +53,10 @@ public class Fligth implements Serializable {
     public Integer getId() {
         return id;
     }
+
+    public void setFly(Fly fly) {
+        this.fly = fly;
+    }
     
     
     public boolean isBookingCode() {
@@ -78,6 +82,30 @@ public class Fligth implements Serializable {
 
     public String getLandingDate() {
         return landingDate;
+    }
+
+    public Fligth(String takeOffDate, String landingDate, int price, boolean bookingCode, int freeSeats) {
+        this.takeOffDate = takeOffDate;
+        this.landingDate = landingDate;
+        this.price = price;
+        this.bookingCode = bookingCode;
+        this.freeSeats = freeSeats;
+    }
+
+    public void setTakeOffDate(String takeOffDate) {
+        this.takeOffDate = takeOffDate;
+    }
+
+    public void setFromAirport(Airport fromAirport) {
+        this.fromAirport = fromAirport;
+    }
+
+    public void setToAirport(Airport toAirport) {
+        this.toAirport = toAirport;
+    }
+
+    public void setLandingDate(String landingDate) {
+        this.landingDate = landingDate;
     }
 
     
