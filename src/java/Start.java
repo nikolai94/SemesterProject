@@ -27,7 +27,7 @@ public class Start {
       Gson g = new Gson();
       
       
-       //System.out.println(facade.booking(2, kunde));
+       System.out.println(facade.booking(3, kunde));
     
        // System.out.println(g.toJson(facade.getFlightsWithAirportsAndDate("Roskilde lufthavn", "Randers flyplads", "13-02-15")));
        

@@ -26,6 +26,73 @@ import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 @Path("")
 public class GenericResource {
 
+    public String datoSorter(String date)
+    {
+      String str[] = date.split(" ");
+      
+      int day = Integer.parseInt(str[0])+1;
+      
+      String newDay = "";
+      if(str[0].length() == 1 ){
+          newDay = "0"+day;
+      }
+      else{
+          newDay = ""+day;
+      }
+      String md = 0+"";
+      
+      if(str[1].equalsIgnoreCase("Jan"))
+      {
+          md = "01";
+      }
+      else if(str[1].equalsIgnoreCase("Feb"))
+      {
+          md = "02";
+      }
+       else if(str[1].equalsIgnoreCase("Mar"))
+      {
+          md = "03";
+      }
+       
+       else if(str[1].equalsIgnoreCase("Apr"))
+      {
+          md = "04";
+      }
+       else if(str[1].equalsIgnoreCase("May"))
+      {
+          md = "05";
+      }
+       else if(str[1].equalsIgnoreCase("Jun"))
+      {
+          md = "06";
+      }
+         else if(str[1].equalsIgnoreCase("Jul"))
+      {
+          md = "07";
+      }
+         else if(str[1].equalsIgnoreCase("Aug"))
+      {
+          md = "08";
+      }
+      else if(str[1].equalsIgnoreCase("Sep"))
+      {
+           md = "09";
+      }
+      else if(str[1].equalsIgnoreCase("Oct"))
+      {
+           md = "10";
+      }
+       else if(str[1].equalsIgnoreCase("Nov"))
+      {
+           md = "11";
+      }
+       else if(str[1].equalsIgnoreCase("Dec"))
+      {
+           md = "12";
+      }
+      
+        return newDay+"-"+md+"-"+str[2];
+    }
     @Context
     private UriInfo context;
     static Gson gson = new Gson();
@@ -59,17 +126,20 @@ public class GenericResource {
             @PathParam("date") long date){
         String dato = "";
         String datoSlut = "";
+        Date guf = null;
         try {
          Date hej = new Date(date);
-        Date guf = new Date(date+TimeZone.getDefault().getOffset(hej.getTime()));
+         guf = new Date(date+TimeZone.getDefault().getOffset(hej.getTime()));
        
          dato = guf.toLocaleString();
          datoSlut = dato.substring(0, 10);
         } catch (Exception e) {
            // return e.toString();
         }
-        
-        return gson.toJson(facade.afbudsrejser(startAirport, datoSlut));
+             
+            
+  
+        return gson.toJson(facade.afbudsrejser(startAirport, datoSorter(guf.toGMTString())));
         
     }
     //DONE
@@ -80,18 +150,19 @@ public class GenericResource {
         @PathParam("slutAirport") String slutAirport, @PathParam("dato") Long datoUrl){
          String dato = "";
         String datoSlut = "";
+        Date guf = null;
+        Date hej = null;
         try {
-         Date hej = new Date(datoUrl);
-        Date guf = new Date(datoUrl+TimeZone.getDefault().getOffset(hej.getTime()));
+          hej = new Date(datoUrl);
+        guf = new Date(datoUrl+TimeZone.getTimeZone("CST").getOffset(hej.getTime()));
        
          dato = guf.toLocaleString();
          datoSlut = dato.substring(0, 10);
         } catch (Exception e) {
             return e.toString();
         }
-       
-          
-        return gson.toJson(facade.getFlightsWithAirportsAndDate(startAirport, slutAirport, datoSlut));
+       //   return "datoslut"+datoSlut + " dato " + dato + "guf "+ guf + " HEJ:"+hej +"herher "+guf.getDay()+"-"+guf.getMonth()+"-"+guf.getYear() + "getdate" +guf.getDate()+ " toString"+guf.toString() + "toGMTString" + guf.toGMTString();
+        return gson.toJson(facade.getFlightsWithAirportsAndDate(startAirport, slutAirport,  datoSorter(guf.toGMTString())));
         
 }
     //DONE
