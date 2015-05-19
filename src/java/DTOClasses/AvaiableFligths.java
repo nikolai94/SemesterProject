@@ -19,7 +19,7 @@ public class AvaiableFligths {
     String depature;
     String destination;
     int seats;
-    int avaiableSeats;
+    int availableSeats;
     boolean bookingCode;
 
     public AvaiableFligths(String airline, int price, String flightId, String takeOffDate, String landingDate, String depature, String destination, int seats, int avaiableSeats, boolean bookingCode) {
@@ -31,7 +31,7 @@ public class AvaiableFligths {
         this.depature = depature;
         this.destination = destination;
         this.seats = seats;
-        this.avaiableSeats = avaiableSeats;
+        this.availableSeats = avaiableSeats;
         this.bookingCode = bookingCode;
     }
 
@@ -100,11 +100,11 @@ public class AvaiableFligths {
     }
 
     public int getAvaiableSeats() {
-        return avaiableSeats;
+        return availableSeats;
     }
 
     public void setAvaiableSeats(int avaiableSeats) {
-        this.avaiableSeats = avaiableSeats;
+        this.availableSeats = avaiableSeats;
     }
 
     public boolean isBookingCode() {

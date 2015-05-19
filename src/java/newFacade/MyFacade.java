@@ -108,7 +108,7 @@ public class MyFacade {
              }
          list.get(i).setTakeOffDate(date.getTime()+"");
          list.get(i).setLandingDate(date2.getTime()+"");
-              AvaiableFligths dtoFlight = new AvaiableFligths(list.get(i).getFly().getAirline().getFirmName(),list.get(i).getPrice(),list.get(i).getId()+"",list.get(i).getTakeOffDate(),list.get(i).getLandingDate(),list.get(i).getFromAirport().getCode(),list.get(i).getToAirport().getCode(),list.get(i).getFly().getSeats(), list.get(i).getFreeSeats(), list.get(i).isBookingCode());
+              AvaiableFligths dtoFlight = new AvaiableFligths(list.get(i).getFly().getAirline().getFirmName(),list.get(i).getPrice(),list.get(i).getId()+"",list.get(i).getTakeOffDate(),list.get(i).getLandingDate(),list.get(i).getFromAirport().getName(),list.get(i).getToAirport().getName(),list.get(i).getFly().getSeats(), list.get(i).getFreeSeats(), list.get(i).isBookingCode());
              DTOFLigths.add(dtoFlight);
           }
          return DTOFLigths;
